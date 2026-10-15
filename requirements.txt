@@ -1,0 +1,11 @@
+streamlit>=1.40
+pandas
+numpy
+plotly
+sqlalchemy>=2.0
+openpyxl
+python-docx>=1.1
+matplotlib>=3.8
+lxml
+psycopg2-binary   # Postgres (Neon)
+# PDF para impressão (opcional): LibreOffice instalado (soffice no PATH). Sem ele, imprima pelo .docx.

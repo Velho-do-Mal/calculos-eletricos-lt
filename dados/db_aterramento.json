@@ -1,0 +1,585 @@
+{
+ "materiais": [
+  {
+   "nome": "Cobre (Macio)",
+   "cond": 100,
+   "a0": 0.00427,
+   "ar": 0.00393,
+   "tf": 1083,
+   "rho": 1.724,
+   "tcap": 3.422
+  },
+  {
+   "nome": "Cobre (Duro)",
+   "cond": 97,
+   "a0": 0.00413,
+   "ar": 0.00381,
+   "tf": 1084,
+   "rho": 1.777,
+   "tcap": 3.422
+  },
+  {
+   "nome": "Aço Cobreado 40%",
+   "cond": 40,
+   "a0": 0.00408,
+   "ar": 0.00378,
+   "tf": 1084,
+   "rho": 4.397,
+   "tcap": 3.846
+  },
+  {
+   "nome": "Aço Cobreado 30%",
+   "cond": 30,
+   "a0": 0.00408,
+   "ar": 0.00378,
+   "tf": 1084,
+   "rho": 5.862,
+   "tcap": 3.846
+  },
+  {
+   "nome": "Haste de Aço Cobreado",
+   "cond": 20,
+   "a0": 0.00408,
+   "ar": 0.00378,
+   "tf": 1084,
+   "rho": 8.62,
+   "tcap": 3.846
+  },
+  {
+   "nome": "Fio de Alumínio",
+   "cond": 61,
+   "a0": 0.00439,
+   "ar": 0.00403,
+   "tf": 657,
+   "rho": 2.862,
+   "tcap": 2.556
+  },
+  {
+   "nome": "Liga de Alumínio 5005",
+   "cond": 53.5,
+   "a0": 0.0038,
+   "ar": 0.00353,
+   "tf": 660,
+   "rho": 3.222,
+   "tcap": 2.598
+  },
+  {
+   "nome": "Liga de Alumínio 6201",
+   "cond": 52.5,
+   "a0": 0.00373,
+   "ar": 0.00347,
+   "tf": 660,
+   "rho": 3.284,
+   "tcap": 2.598
+  },
+  {
+   "nome": "Aço-Alumínio",
+   "cond": 20.3,
+   "a0": 0.00388,
+   "ar": 0.0036,
+   "tf": 660,
+   "rho": 8.48,
+   "tcap": 2.67
+  },
+  {
+   "nome": "Aço 1020",
+   "cond": 10.8,
+   "a0": 0.00165,
+   "ar": 0.0016,
+   "tf": 1510,
+   "rho": 15.9,
+   "tcap": 3.28
+  },
+  {
+   "nome": "Haste de Aço",
+   "cond": 9.8,
+   "a0": 0.00165,
+   "ar": 0.0016,
+   "tf": 1400,
+   "rho": 17.5,
+   "tcap": 4.44
+  },
+  {
+   "nome": "Aço Zincado",
+   "cond": 8.5,
+   "a0": 0.00341,
+   "ar": 0.0032,
+   "tf": 419,
+   "rho": 20.1,
+   "tcap": 3.931
+  },
+  {
+   "nome": "Aço Inoxidável 304",
+   "cond": 2.4,
+   "a0": 0.00134,
+   "ar": 0.0013,
+   "tf": 1400,
+   "rho": 72,
+   "tcap": 4.032
+  }
+ ],
+ "conexoes": [
+  {
+   "nome": "Mecânica (Aparafusada ou por pressão)",
+   "tm": 250
+  },
+  {
+   "nome": "Emenda tipo solda oxiacetilênica",
+   "tm": 450
+  },
+  {
+   "nome": "Emenda com solda exotérmica",
+   "tm": 850
+  },
+  {
+   "nome": "Emenda à compressão",
+   "tm": 850
+  }
+ ],
+ "cabos": [
+  {
+   "nome": "Aço Cobreado 30% - 10 mm²",
+   "s_nom": 10,
+   "s_ef": 10,
+   "tipo": "LCA / 30",
+   "nfios": 3,
+   "d_fio": 2.06,
+   "d_ext": 4.43,
+   "rup": 300,
+   "peso": 81,
+   "r": 5.713
+  },
+  {
+   "nome": "Aço Cobreado 30% - 16 mm²",
+   "s_nom": 16,
+   "s_ef": 15.9,
+   "tipo": "LCA / 30",
+   "nfios": 3,
+   "d_fio": 2.59,
+   "d_ext": 5.58,
+   "rup": 470,
+   "peso": 128,
+   "r": 3.614
+  },
+  {
+   "nome": "Aço Cobreado 30% - 25mm²",
+   "s_nom": 25,
+   "s_ef": 23.3,
+   "tipo": "LCA / 30",
+   "nfios": 7,
+   "d_fio": 2.06,
+   "d_ext": 6.15,
+   "rup": 660,
+   "peso": 188,
+   "r": 2.462
+  },
+  {
+   "nome": "Aço Cobreado 30% - 35 mm²",
+   "s_nom": 35,
+   "s_ef": 37.2,
+   "tipo": "LCA / 30",
+   "nfios": 7,
+   "d_fio": 2.59,
+   "d_ext": 7.77,
+   "rup": 1040,
+   "peso": 300,
+   "r": 1.543
+  },
+  {
+   "nome": "Aço Cobreado 30% - 40 mm²",
+   "s_nom": 40,
+   "s_ef": 47,
+   "tipo": "LCA / 30",
+   "nfios": 7,
+   "d_fio": 2.91,
+   "d_ext": 8.73,
+   "rup": 1320,
+   "peso": 379,
+   "r": 1.222
+  },
+  {
+   "nome": "Aço Cobreado 40% - 25 mm²",
+   "s_nom": 25,
+   "s_ef": 21.2,
+   "tipo": "LCA / 40",
+   "nfios": 1,
+   "d_fio": 5.19,
+   "d_ext": 5.19,
+   "rup": 592,
+   "peso": 173,
+   "r": 2.037
+  },
+  {
+   "nome": "Aço Cobreado 40% - 70 mm²",
+   "s_nom": 70,
+   "s_ef": 74.7,
+   "tipo": "LCA / 40",
+   "nfios": 7,
+   "d_fio": 3.67,
+   "d_ext": 11.01,
+   "rup": 1856,
+   "peso": 612,
+   "r": 0.576
+  },
+  {
+   "nome": "Aço Cobreado 40% - 95 mm²",
+   "s_nom": 95,
+   "s_ef": 101.1,
+   "tipo": "LCA / 40",
+   "nfios": 19,
+   "d_fio": 2.59,
+   "d_ext": 12.95,
+   "rup": 2645,
+   "peso": 828,
+   "r": 0.425
+  },
+  {
+   "nome": "Aço Cobreado 40% - 120 mm²",
+   "s_nom": 120,
+   "s_ef": 127.6,
+   "tipo": "LCA / 40",
+   "nfios": 19,
+   "d_fio": 2.91,
+   "d_ext": 14.55,
+   "rup": 3559,
+   "peso": 1045,
+   "r": 0.337
+  },
+  {
+   "nome": "Aço Cobreado 53% - 10 mm²",
+   "s_nom": 10,
+   "s_ef": 10,
+   "tipo": "LCA / 53",
+   "nfios": 3,
+   "d_fio": 2.06,
+   "d_ext": 4.43,
+   "rup": 260,
+   "peso": 84,
+   "r": 3.217
+  },
+  {
+   "nome": "Aço Cobreado 53% - 16 mm²",
+   "s_nom": 16,
+   "s_ef": 15.9,
+   "tipo": "LCA / 53",
+   "nfios": 3,
+   "d_fio": 2.59,
+   "d_ext": 5.58,
+   "rup": 410,
+   "peso": 133,
+   "r": 2.049
+  },
+  {
+   "nome": "Aço Cobreado 53% - 25 mm²",
+   "s_nom": 25,
+   "s_ef": 23.3,
+   "tipo": "LCA / 53",
+   "nfios": 7,
+   "d_fio": 2.06,
+   "d_ext": 6.15,
+   "rup": 570,
+   "peso": 195,
+   "r": 1.396
+  },
+  {
+   "nome": "Aço Cobreado 53% - 35 mm²",
+   "s_nom": 35,
+   "s_ef": 37.2,
+   "tipo": "LCA / 53",
+   "nfios": 7,
+   "d_fio": 2.59,
+   "d_ext": 7.77,
+   "rup": 910,
+   "peso": 311,
+   "r": 0.874
+  },
+  {
+   "nome": "Aço Cobreado 53% - 50 mm²",
+   "s_nom": 50,
+   "s_ef": 47,
+   "tipo": "LCA / 53",
+   "nfios": 7,
+   "d_fio": 2.91,
+   "d_ext": 8.73,
+   "rup": 1150,
+   "peso": 392,
+   "r": 0.693
+  },
+  {
+   "nome": "Aço Cobreado 53% - 70 mm²",
+   "s_nom": 70,
+   "s_ef": 74.7,
+   "tipo": "LCA / 53",
+   "nfios": 7,
+   "d_fio": 3.67,
+   "d_ext": 11.01,
+   "rup": 1830,
+   "peso": 624,
+   "r": 0.436
+  },
+  {
+   "nome": "Aço Cobreado 53% - 95 mm²",
+   "s_nom": 95,
+   "s_ef": 101.1,
+   "tipo": "LCA / 53",
+   "nfios": 19,
+   "d_fio": 2.59,
+   "d_ext": 12.95,
+   "rup": 2110,
+   "peso": 844,
+   "r": 0.322
+  },
+  {
+   "nome": "Aço Cobreado 53% - 120 mm²",
+   "s_nom": 120,
+   "s_ef": 127.6,
+   "tipo": "LCA / 53",
+   "nfios": 19,
+   "d_fio": 2.91,
+   "d_ext": 14.55,
+   "rup": 2680,
+   "peso": 1065,
+   "r": 0.255
+  },
+  {
+   "nome": "Coppersteel 30% IACS - 4 AWG",
+   "s_nom": "4 AWG",
+   "s_ef": 21.16,
+   "tipo": "LCA / 30",
+   "nfios": 1,
+   "d_fio": 5.19,
+   "d_ext": 5.19,
+   "rup": 666,
+   "peso": 171,
+   "r": 2.716
+  },
+  {
+   "nome": "Cabo Cobre Nu - 10 mm² - Classe 2A",
+   "s_nom": 10,
+   "s_ef": 10,
+   "tipo": "Classe 2A",
+   "nfios": 7,
+   "d_fio": 1.36,
+   "d_ext": 4.08,
+   "rup": 329,
+   "peso": 90.5,
+   "r": 1.82
+  },
+  {
+   "nome": "Cabo Cobre Nu - 16 mm² - Classe 2A",
+   "s_nom": 16,
+   "s_ef": 16,
+   "tipo": "Classe 2A",
+   "nfios": 7,
+   "d_fio": 1.7,
+   "d_ext": 5.1,
+   "rup": 506,
+   "peso": 141,
+   "r": 1.17
+  },
+  {
+   "nome": "Cabo Cobre Nu - 25 mm² - Classe 2A",
+   "s_nom": 25,
+   "s_ef": 25,
+   "tipo": "Classe 2A",
+   "nfios": 7,
+   "d_fio": 2.06,
+   "d_ext": 6.18,
+   "rup": 739,
+   "peso": 208,
+   "r": 0.795
+  },
+  {
+   "nome": "Cabo Cobre Nu - 35 mm² - Classe 2A",
+   "s_nom": 35,
+   "s_ef": 35,
+   "tipo": "Classe 2A",
+   "nfios": 7,
+   "d_fio": 2.5,
+   "d_ext": 7.5,
+   "rup": 107.30000000000001,
+   "peso": 306,
+   "r": 0.538
+  },
+  {
+   "nome": "Cabo Cobre Nu - 50 mm² - Classe 2A",
+   "s_nom": 50,
+   "s_ef": 50,
+   "tipo": "Classe 2A",
+   "nfios": 7,
+   "d_fio": 3,
+   "d_ext": 9,
+   "rup": 152.3,
+   "peso": 440,
+   "r": 0.375
+  },
+  {
+   "nome": "Cabo Cobre Nu - 70 mm² - Classe 2A",
+   "s_nom": 70,
+   "s_ef": 70,
+   "tipo": "Classe 2A",
+   "nfios": 7,
+   "d_fio": 3.45,
+   "d_ext": 10.36,
+   "rup": 200.2,
+   "peso": 582,
+   "r": 0.283
+  },
+  {
+   "nome": "Cabo Cobre Nu - 95 mm² - Classe 2A",
+   "s_nom": 95,
+   "s_ef": 95,
+   "tipo": "Classe 2A",
+   "nfios": 7,
+   "d_fio": 4.12,
+   "d_ext": 12.36,
+   "rup": 283.9,
+   "peso": 831,
+   "r": 0.199
+  },
+  {
+   "nome": "Cabo Cobre Nu - 120 mm² - Classe 2A",
+   "s_nom": 120,
+   "s_ef": 120,
+   "tipo": "Classe 2A",
+   "nfios": 19,
+   "d_fio": 2.9,
+   "d_ext": 14.5,
+   "rup": 389.7,
+   "peso": 1117,
+   "r": 0.148
+  },
+  {
+   "nome": "Cabo Cobre Nu - 150 mm² - Classe 2A",
+   "s_nom": 150,
+   "s_ef": 150,
+   "tipo": "Classe 2A",
+   "nfios": 19,
+   "d_fio": 3.25,
+   "d_ext": 16.26,
+   "rup": 485.20000000000005,
+   "peso": 1403,
+   "r": 0.118
+  },
+  {
+   "nome": "Cabo Cobre Nu - 185 mm² - Classe 2A",
+   "s_nom": 185,
+   "s_ef": 185,
+   "tipo": "Classe 2A",
+   "nfios": 19,
+   "d_fio": 3.55,
+   "d_ext": 17.75,
+   "rup": 575.5,
+   "peso": 1674,
+   "r": 0.099
+  },
+  {
+   "nome": "Cabo Cobre Nu - 240 mm² - Classe 2A",
+   "s_nom": 240,
+   "s_ef": 240,
+   "tipo": "Classe 2A",
+   "nfios": 19,
+   "d_fio": 4,
+   "d_ext": 20,
+   "rup": 726.3,
+   "peso": 2125,
+   "r": 0.0777
+  },
+  {
+   "nome": "Cabo Cobre Nu - 300 mm² - Classe 2A",
+   "s_nom": 300,
+   "s_ef": 300,
+   "tipo": "Classe 2A",
+   "nfios": 19,
+   "d_fio": 4.5,
+   "d_ext": 22.5,
+   "rup": 913.8,
+   "peso": 2689,
+   "r": 0.0613
+  },
+  {
+   "nome": "Cabo Cobre Nu - 70 mm² - Classe 3A",
+   "s_nom": 70,
+   "s_ef": 70,
+   "tipo": "Classe 3A",
+   "nfios": 19,
+   "d_fio": 2.12,
+   "d_ext": 10.6,
+   "rup": 210.7,
+   "peso": 596.9,
+   "r": 0.276
+  },
+  {
+   "nome": "Cabo Cobre Nu - 95 mm² - Classe 3A",
+   "s_nom": 95,
+   "s_ef": 95,
+   "tipo": "Classe 3A",
+   "nfios": 19,
+   "d_fio": 2.5,
+   "d_ext": 12.5,
+   "rup": 291.3,
+   "peso": 830,
+   "r": 0.198
+  },
+  {
+   "nome": "Cabo Cobre Nu - 120 mm² - Classe 3A",
+   "s_nom": 120,
+   "s_ef": 120,
+   "tipo": "Classe 3A",
+   "nfios": 37,
+   "d_fio": 2.06,
+   "d_ext": 14.42,
+   "rup": 390.7,
+   "peso": 1098,
+   "r": 0.15
+  },
+  {
+   "nome": "Cabo Cobre Nu - 150 mm² - Classe 3A",
+   "s_nom": 150,
+   "s_ef": 150,
+   "tipo": "Classe 3A",
+   "nfios": 37,
+   "d_fio": 2.24,
+   "d_ext": 15.68,
+   "rup": 458,
+   "peso": 1298,
+   "r": 0.127
+  },
+  {
+   "nome": "Cabo Cobre Nu - 185 mm² - Classe 3A",
+   "s_nom": 185,
+   "s_ef": 185,
+   "tipo": "Classe 3A",
+   "nfios": 37,
+   "d_fio": 2.5,
+   "d_ext": 17.5,
+   "rup": 567.2,
+   "peso": 1616,
+   "r": 0.102
+  },
+  {
+   "nome": "Cabo Cobre Nu - 240 mm² - Classe 3A",
+   "s_nom": 240,
+   "s_ef": 240,
+   "tipo": "Classe 3A",
+   "nfios": 37,
+   "d_fio": 2.9,
+   "d_ext": 20.3,
+   "rup": 758.8,
+   "peso": 2175,
+   "r": 0.076
+  },
+  {
+   "nome": "Cabo Cobre Nu - 300 mm² - Classe 3A",
+   "s_nom": 300,
+   "s_ef": 300,
+   "tipo": "Classe 3A",
+   "nfios": 37,
+   "d_fio": 3.25,
+   "d_ext": 22.75,
+   "rup": 944.8000000000001,
+   "peso": 2710,
+   "r": 0.0604
+  }
+ ]
+}
