@@ -246,10 +246,12 @@ def gerar(caminho, proj, d, res, codigo="BK-LT-MC-VENTOS", rev="R0"):
     R.h1("RESULTADOS OBTIDOS")
     linhas = []
     for a_ in res["aprovacao"]:
-        val = "—" if a_["valor"] is None else f(a_["valor"], 2 if a_["unidade"] == "m/s" else 1)
-        linhas.append([a_["item"], val, a_["unidade"], a_["base"], a_["fonte"]])
-    R.tabela("Quadro de dados para aprovação da transmissora", ["Parâmetro", "Valor", "Unid.", "Base (NBR 5422:2024)", "Fonte do dado"],
-             linhas, [4.2, 1.8, 1.2, 4.8, 4.0],
+        nd = 2 if a_["unidade"] == "m/s" else (4 if a_["unidade"] == "kg/m³" else 1)
+        val = "—" if a_["valor"] is None else f(a_["valor"], nd)
+        pr = "—" if a_.get("pressao") is None else f(a_["pressao"], 1)
+        linhas.append([a_["item"], val, a_["unidade"], pr, a_["base"], a_["fonte"]])
+    R.tabela("Quadro de dados para aprovação da transmissora", ["Parâmetro", "Valor", "Unid.", "Pressão (Pa)", "Base (NBR 5422:2024)", "Fonte do dado"],
+             linhas, [4.0, 1.6, 1.2, 1.6, 4.4, 3.2],
              fonte="Dados meteorológicos: INMET, estação " + estacao + ". Cálculo próprio conforme NBR 5422:2024.")
     R.p("o quadro apresenta valores calculados e não declara aprovação; a aprovação cabe à transmissora.", "RESULTADO:")
     R.tabela("Resumo das verificações", ["Verificação", "Norma/critério", "Valor calculado", "Limite", "Status"], [
@@ -264,7 +266,8 @@ def gerar(caminho, proj, d, res, codigo="BK-LT-MC-VENTOS", rev="R0"):
     # 9
     R.h1("CONCLUSÕES")
     R.p("Resultados calculados:", align=WD_ALIGN_PARAGRAPH.LEFT).runs[0].bold = True
-    R.lista([f"{a_['item']}: {f(a_['valor'], 2 if a_['unidade'] == 'm/s' else 1)} {a_['unidade']} ({a_['base']})"
+    R.lista([f"{a_['item']}: {f(a_['valor'], 2 if a_['unidade'] == 'm/s' else (4 if a_['unidade'] == 'kg/m³' else 1))} {a_['unidade']}"
+             + (f", pressão {f(a_['pressao'], 1)} Pa" if a_.get("pressao") is not None else "") + f" ({a_['base']})"
              for a_ in res["aprovacao"] if a_["valor"] is not None])
     R.p("Recomendações:", align=WD_ALIGN_PARAGRAPH.LEFT).runs[0].bold = True
     R.lista(["Confirmar com a transmissora os períodos de retorno do vento de 10 min e de 3 s.",
@@ -281,12 +284,15 @@ def gerar(caminho, proj, d, res, codigo="BK-LT-MC-VENTOS", rev="R0"):
     R.doc.add_page_break()
     R.h1("ANEXO A – TABELA DE CASOS PARA O PLS-CADD")
     R.p("A tabela abaixo reúne os casos de clima com as velocidades e temperaturas calculadas neste estudo, no formato de colunas do PLS-CADD.")
-    cols = ["Description", "Wind Velocity (m/s)", "Wind Pressure (Pa)", "Wire Temp. (deg C)", "Ambient Temp. (deg C)", "Wire Wind Height Adjust Model"]
-    R.tabela("Casos de clima (Q = " + f(mu_ / 2, 4) + " kg/m³; gelo = 0)", ["#"] + ["Descrição", "V (m/s)", "Pressão (Pa)", "T cabo (°C)", "T amb. (°C)", "Modelo altura"],
-             [[str(p_["Row #"]), p_["Description"], f(p_["Wind Velocity (m/s)"], 2), f(p_["Wind Pressure (Pa)"], 0),
+    R.tabela("Casos de clima – colunas do PLS-CADD", ["#", "Description", "Q (kg/m³)", "Vento (m/s)", "Pressão (Pa)", "T cabo (°C)", "T amb. (°C)", "Modelo altura"],
+             [[str(p_["Row #"]), p_["Description"], f(p_["Air Density Factor (Q) (kg/m^3)"], 4),
+               "—" if p_["Wind Velocity (m/s)"] is None else f(p_["Wind Velocity (m/s)"], 2),
+               "—" if p_["Wind Pressure (Pa)"] is None else f(p_["Wind Pressure (Pa)"], 1),
                "—" if p_["Wire Temp. (deg C)"] is None else f(p_["Wire Temp. (deg C)"], 1),
                "—" if p_["Ambient Temp. (deg C)"] is None else f(p_["Ambient Temp. (deg C)"], 1), p_["Wire Wind Height Adjust Model"]]
-              for p_ in res["pls"]], [0.8, 5.2, 1.8, 2.0, 2.0, 2.0, 2.2])
+              for p_ in res["pls"]], [0.7, 3.6, 1.6, 1.6, 1.8, 1.6, 1.6, 2.6])
+    R.p("Q = μ/2 (kg/m³), pressão = Q·V² (Pa). Colunas fixas em todas as linhas: Wire Ice Thickness, Ice Density, Ice Load e NESC Constant = 0; "
+        "Weather Load Factor = 1; Wire Gust Response Factor = 1. As linhas \"Frequência Industrial\" e \"Surto manobra\" alimentam o balanço das cadeias (M5/M12).", "Colunas do PLS-CADD:")
     R.p("temperaturas de condutor de cada caso (75 °C, 90 °C, 40 °C) são do projeto, não da norma; o vento reduzido, se listado, tem origem a confirmar.",
         "PREMISSA —")
     R.salvar(caminho)

@@ -1317,8 +1317,9 @@ def mod3():
                                        for c in est["casos"]],
                                       columns=["Caso", "T (anos)", "Integração", "K(T,n)", "V_R (m/s)", "V_P (m/s)", "q0 (Pa)"]), hide_index=True)
         st.markdown("**Quadro para aprovação da transmissora**")
-        st.dataframe(pd.DataFrame([[a["item"], None if a["valor"] is None else round(a["valor"], 2), a["unidade"], a["base"], a["fonte"]]
-                                   for a in res["aprovacao"]], columns=["Parâmetro", "Valor", "Unid.", "Base", "Fonte"]), hide_index=True)
+        st.dataframe(pd.DataFrame([[a["item"], None if a["valor"] is None else round(a["valor"], 4 if a["unidade"] == "kg/m³" else 2), a["unidade"],
+                                    None if a.get("pressao") is None else round(a["pressao"], 1), a["base"], a["fonte"]]
+                                   for a in res["aprovacao"]], columns=["Parâmetro", "Valor", "Unid.", "Pressão (Pa)", "Base", "Fonte"]), hide_index=True)
         if res["ok"]:
             st.markdown("**Casos de clima para o PLS-CADD**")
             dfp = pd.DataFrame(res["pls"])

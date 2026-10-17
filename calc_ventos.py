@@ -202,18 +202,22 @@ def montar(d, h_cabo_geo=None):
         r["estudo"], r["ok"] = est, True
         v = {c["chave"]: c for c in est["casos"]}
         fonte_v = "INMET (série) + NBR 5422:2024"
-        def linha(item, val, un, base, fonte):
-            r["aprovacao"].append(dict(item=item, valor=val, unidade=un, base=base, fonte=fonte))
+        q_ar = est["mu"] / 2.0
+        def linha(item, val, un, base, fonte, vento=True):
+            r["aprovacao"].append(dict(item=item, valor=val, unidade=un, base=base, fonte=fonte,
+                                       pressao=(q_ar * val ** 2 if vento and val is not None else None)))
         linha("VENTO MÁX (10 min)", v["max"]["VP"], "m/s", f"8.2.1.1 · TR {v['max']['TR']:g} anos", fonte_v)
         linha("VENTO 50/30", v["v5030"]["VP"], "m/s", f"8.2.2.1 · TR {v['v5030']['TR']:g} anos, 30 s", fonte_v)
         linha("VENTO RAJADA (3 s)", v["rajada"]["VP"], "m/s", f"8.2.3.4 · TR {v['rajada']['TR']:g} anos", fonte_v)
         linha("FREQUÊNCIA INDUSTRIAL", v["freq"]["VP"], "m/s", f"9.6.2.1a · TR {v['freq']['TR']:g} anos, 30 s", fonte_v)
         linha("MANOBRA", v["manobra"]["VP"], "m/s", f"9.6.2.1b · TR {v['manobra']['TR']:g} anos, 30 s", fonte_v)
+        linha("MASSA ESPECÍFICA DO AR μ", est["mu"], "kg/m³", "4.7 (T coincidente e altitude)", "Calculado", vento=False)
+        linha("FATOR DE DENSIDADE DO AR Q = μ/2 (PLS-CADD)", q_ar, "kg/m³", "pressão = Q·V² (Pa)", "Calculado", vento=False)
     # temperaturas entram no quadro mesmo sem vento
     for nome, k, base in (("EDS (temperatura média)", "eds", "3.1.54, 4.3.1"), ("T MÁX", "t_max", "3.1.52"),
                           ("T MÍN", "t_min", "3.1.55"), ("T COINCIDENTE (média das mínimas)", "t_coinc", "3.1.49, 11.2.4"),
                           ("T MÉDIA DAS MÁXIMAS ANUAIS", "t_med_max", "7.3.1.1")):
-        r["aprovacao"].append(dict(item=nome, valor=t[k], unidade="°C", base=base,
+        r["aprovacao"].append(dict(item=nome, valor=t[k], unidade="°C", base=base, pressao=None,
                                    fonte="INMET" if t[k] is not None else "DADO NÃO INFORMADO"))
     # --- tabela de casos para o PLS-CADD ---
     if r["ok"]:
@@ -221,29 +225,29 @@ def montar(d, h_cabo_geo=None):
         v = {c["chave"]: c["VP"] for c in est["casos"]}
         tc, tm = t["t_coinc"], t["t_min"]
         tcc = _f(d.get("t_cc_max", 75.0)); tem = _f(d.get("t_cc_emerg", 90.0)); tpr = _f(d.get("t_pr_max", 40.0))
-        linhas = [("EDS", 0.0, t["eds"], t["eds"], "None"),
-                  ("V. Máximo (10 min)", v["max"], tc, tc, "IEC"),
-                  ("V. Máximo 50/30", v["v5030"], tc, tc, "None"),
-                  ("V. Rajada CC (3 s)", v["rajada"], tc, tc, "None"),
-                  ("V. Rajada PR (3 s)", v["rajada"], tc, tc, "None"),
-                  ("Temp. mínima", 0.0, tm, tm, "None"),
-                  ("Temp. máx. CC", 0.0, tcc, t["t_max"], "None"),
-                  ("Temp. emergência CC", 0.0, tem, t["t_max"], "None"),
-                  ("Temp. máx. PR", 0.0, tpr, t["t_max"], "None"),
-                  ("Temp. coincidente", 0.0, tc, tc, "None"),
-                  ("Faixa de segurança (50/30)", v["v5030"], t["t_med_max"], t["t_med_max"], "None"),
-                  ("Balanço freq. industrial", v["freq"], tc, tc, "None"),
-                  ("Balanço manobra", v["manobra"], tc, tc, "None")]
+        tmax = t["t_max"]
+        linhas = [("EDS", None, t["eds"], t["eds"], "None")]
         if "ext" in v:
-            linhas.insert(1, ("V. Extremo (10 min)", v["ext"], tc, tc, "IEC"))
+            linhas.append(("V. extremo", v["ext"], tc, tc, "IEC 60826"))
+        linhas += [("V. max", v["max"], tc, tc, "IEC 60826"),
+                   ("V. max 50/30", v["v5030"], tc, tc, "None"),
+                   ("V. rajada", v["rajada"], tc, tc, "None")]
         if d.get("usar_reduzido"):
-            linhas.append(("V. Reduzido 60 % (origem a confirmar)", 0.6 * v["max"], tc, tc, "IEC"))
+            linhas.append(("V. Reduzido", 0.6 * v["max"], tc, tc, "None"))
+        linhas += [("Faixa de Servidão", v["v5030"], t["t_med_max"], t["t_med_max"], "None"),
+                   ("Frequência Industrial", v["freq"], tc, tc, "None"),
+                   ("Surto manobra", v["manobra"], tc, tc, "None"),
+                   ("Temp. Mín", None, tm, tm, "None"),
+                   ("Temp. Máx PR", None, tpr, tmax, "None"),
+                   ("Temp. Máx", None, tcc, tmax, "None"),
+                   ("Temp. Emergência", None, tem, tmax, "None")]
         for i, (nome, vel, tfio, tamb, mod) in enumerate(linhas, start=1):
             r["pls"].append({"Row #": i, "Description": nome, "Air Density Factor (Q) (kg/m^3)": round(q, 4),
-                             "Wind Velocity (m/s)": round(vel, 2), "Wind Pressure (Pa)": round(q * vel ** 2, 1),
+                             "Wind Velocity (m/s)": None if vel is None else round(vel, 2),
+                             "Wind Pressure (Pa)": None if vel is None else round(q * vel ** 2, 1),
                              "Wire Ice Thickness (cm)": 0.0, "Wire Ice Density (daN/dm^3)": 0.0, "Wire Ice Load (daN/m)": 0.0,
                              "Wire Temp. (deg C)": None if tfio is None else round(tfio, 1),
                              "Ambient Temp. (deg C)": None if tamb is None else round(tamb, 1),
-                             "Weather Load Factor": 1.0, "NESC Constant (daN/m)": 0.0, "Wire Wind Height Adjust Model": mod})
-        avisos.append("NECESSITA VALIDAÇÃO TÉCNICA — Q = μ/2 (pressão = Q·V²). A planilha de referência usa μ nessa coluna; confirmar a convenção no PLS-CADD.")
+                             "Weather Load Factor": 1.0, "NESC Constant (daN/m)": 0.0, "Wire Wind Height Adjust Model": mod, "Wire Gust Response Factor": 1.0})
+        avisos.append("NECESSITA VALIDAÇÃO TÉCNICA — Q = μ/2 (pressão = Q·V²). Conferido com a tabela de casos usada pela BK no PLS-CADD (Q ≈ 0,562 e pressão = Q·V²); confirmar apenas se o cliente usar outra convenção.")
     return r
